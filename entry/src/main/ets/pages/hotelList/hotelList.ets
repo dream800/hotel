@@ -2,9 +2,6 @@ import { getHotelListAPI } from '../../api/hotel'
 import { HotelListModel } from '../../models/hotel';
 import { JSON } from '@kit.ArkTS';
 
-console.log("aaaaaaaaaaaaaaaaaaaaaa")
-
-
 @Entry
 @Component
 struct HotelList {
@@ -13,18 +10,8 @@ struct HotelList {
   @State hotelList: HotelListModel[] = []
 
   onLoad = async () => {
-    console.log("abc")
-
     const data  = await getHotelListAPI()
-
-    const items = data || []
-    console.log(" data: ", data.length)
-
     this.hotelList = data;
-
-    console.log('count: ' , this.hotelList.length)
-
-    // console.log(" data: ", JSON.stringify(data))
   }
 
   onPageShow(): void {
@@ -90,33 +77,36 @@ struct HotelList {
                 Row({
                   space: 4
                 }) {
-                  Text('免费停车')
-                    .border({
-                      width: 1,
-                      color: Color.Gray,
-                      style: BorderStyle.Solid
-                    })
-                    .fontSize(12)
-                    .fontColor('#a1a1a1')
-                    .borderRadius(3)
-                  Text('豪华床')
-                    .border({
-                      width: 1,
-                      color: Color.Gray,
-                      style: BorderStyle.Solid
-                    })
-                    .fontSize(12)
-                    .fontColor('#a1a1a1')
-                    .borderRadius(3)
-                  Text('单人床')
-                    .border({
-                      width: 1,
-                      color: Color.Gray,
-                      style: BorderStyle.Solid
-                    })
-                    .fontSize(12)
-                    .fontColor('#a1a1a1')
-                    .borderRadius(3)
+                  ForEach(item.labelList, (itemValue: string) => {
+                    Text(itemValue)
+                      .border({
+                        width: 1,
+                        color: Color.Gray,
+                        style: BorderStyle.Solid
+                      })
+                      .fontSize(12)
+                      .fontColor('#a1a1a1')
+                      .borderRadius(3)
+                  })
+
+                  // Text('豪华床')
+                  //   .border({
+                  //     width: 1,
+                  //     color: Color.Gray,
+                  //     style: BorderStyle.Solid
+                  //   })
+                  //   .fontSize(12)
+                  //   .fontColor('#a1a1a1')
+                  //   .borderRadius(3)
+                  // Text('单人床')
+                  //   .border({
+                  //     width: 1,
+                  //     color: Color.Gray,
+                  //     style: BorderStyle.Solid
+                  //   })
+                  //   .fontSize(12)
+                  //   .fontColor('#a1a1a1')
+                  //   .borderRadius(3)
                 }
               }
               .height(120)
