@@ -20,8 +20,8 @@ export async function requestHttp<T>(url: string, method: http.RequestMethod = h
       },
       readTimeout: 10000, // 如果多少秒没响应就断开
     })
-    const result = res.result as ResponseData<T>
-    return result.data
+    const result = res.result as T[]
+    return result;
   } catch (err) {
     console.error('error', err)
     return Promise.reject(err)
@@ -32,7 +32,7 @@ export async function requestHttp<T>(url: string, method: http.RequestMethod = h
 
 export class Request {
   /** T 代表的接口返回的数据的类型 后端返回的响应体中data的类型 */
-  static get<T = null>(url: string): Promise<T> {
+  static get<T = null>(url: string): Promise<T[]> {
     return requestHttp<T>(url, http.RequestMethod.GET)
   }
 }
