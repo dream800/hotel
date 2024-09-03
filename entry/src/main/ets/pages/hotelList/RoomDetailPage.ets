@@ -1,10 +1,94 @@
 import { router } from '@kit.ArkUI';
 import { Icon, TxtItem } from '../../component/icon';
 
+import dayjs from "dayjs";
+import { CustomCalendarPickerDialog } from '../../view/CustomCalendarPickerDialog';
+import { DateModel } from '../../component/DateModel';
+import { getRealTimeDate } from '../../component/GetDate';
+import { DataManager } from '../../component/DataManager';
+
+interface IconItemModel {
+  imageUrl: ResourceStr,
+  txt: string
+}
+
 @Entry
 @Component
 struct RoomDetailPage {
   @State message: string = 'Hello World';
+  IconList: IconItemModel[] = [{
+    imageUrl: $r('app.media.mi'),
+    txt: "20㎡"
+  },
+    {
+      imageUrl: $r('app.media.lou'),
+      txt: "2-5层"
+    },
+    {
+      imageUrl: $r('app.media.wifi'),
+      txt: "免费wifi"
+    },
+    {
+      imageUrl: $r('app.media.dow'),
+      txt: "有窗"
+    },
+    {
+      imageUrl: $r('app.media.bed'),
+      txt: "1.2米床"
+    }];
+  private week: string[] = ['日', '一', '二', '三', '四', '五', '六']; // 设置日历周，从周日开始
+  @State currentMonth: number = 1; // 当前月份
+  @State currentDay: number = 1; // 当前日
+  @State currentYear: number = 1; // 当前年分
+
+  @State nextMonth: number = 1; // 下一天月份
+  @State nextDay: number = 1; // 下一天日
+  @State nextYear: number = 1; // 下一天年分
+
+  @State nextWeek: string = '';
+
+  @StorageLink('selectedDate') dateModel: DateModel = new DateModel(0, 0, 0, 0); // 初始化dateModel数据
+
+  // 获取当前日期
+  aboutToAppear(): void {
+    let dateModel: DateModel = getRealTimeDate(); // 获取当前年月日信息
+    this.dateModel = getRealTimeDate();
+    // console.log("dataModel ", JSON.stringify(dateModel))
+    this.currentMonth = dateModel.month; // 获取当前月份
+    this.currentDay = dateModel.day; // 获取当前日
+    this.currentYear = dateModel.year; // 获取当前年份
+
+    this.nextMonth = dateModel.month;
+    this.nextDay = dateModel.day + 1;
+    this.nextYear = dateModel.year;
+
+    this.nextWeek = this.week[dateModel.week + 1 == 7 ? 0 : dateModel.week + 1];
+  }
+
+  getNewNextWeek() {
+    console.log("-----------------------------------------------------------")
+    // this.nextWeek = this.week[this.dateModel.week+1 == 7 ? 0 : this.dateModel.week+1];
+    // console.log("cur: ", this.week[this.dateModel.week])
+    // console.log("cur num: " ,this.dateModel.week)
+    // console.log(this.nextWeek)
+    // console.log("dataModel ", JSON.stringify(this.dateModel))
+  }
+
+  // TODO: 知识点：通过CustomDialogController类显示自定义弹窗
+  dialogController: CustomDialogController = new CustomDialogController({
+    builder: CustomCalendarPickerDialog({
+      currentMonth: this.currentMonth,
+      currentDay: this.currentDay,
+      currentYear: this.currentYear,
+      cancel: this.onCancel
+    }),
+    alignment: DialogAlignment.Bottom, // 自定义弹窗底端对齐
+    customStyle: true // 弹窗样式自定义
+  })
+
+  // 点击遮障层退出时的回调
+  onCancel() {
+  }
 
   build() {
     Column() {
@@ -93,7 +177,6 @@ struct RoomDetailPage {
       }
       .width('100%')
 
-
       Divider()
         .strokeWidth(5)
         .color('#2ca1a1a1')
@@ -102,30 +185,44 @@ struct RoomDetailPage {
           duration: 300
         })
 
-
       Column({
         space: 15
       }) {
         Row() {
           Row() {
-            Row() {
-              Text('05月22日 ')
-                .fontSize(14)
-              Text('周三')
+            // 当前日期显示
+            Row({ space: 5 }) {
+              Text(`${this.dateModel.month}月${this.dateModel.day}日`)
+                .fontSize($r('app.string.ohos_id_text_size_headline'))
+              Text(`星期${this.week[this.dateModel.week]}`)
                 .fontSize(12)
                 .fontColor('#a1a1a1')
             }
+            .justifyContent(FlexAlign.Start)
+            .onClick(() => {
+              // 点击当前日期后打开自定义弹窗显示日历
+              this.dialogController.open()
+              this.getNewNextWeek();
+            })
 
             Text('-')
               .fontColor('#a1a1a1')
+              .fontSize(20)
+              .width(20)
 
-            Row() {
-              Text('05月23日')
-                .fontSize(14)
-              Text('周四')
+            // 当前日期显示
+            Row({ space: 5 }) {
+              Text(`${this.dateModel.month}月${this.dateModel.day+1}日`)
+                .fontSize($r('app.string.ohos_id_text_size_headline'))
+              Text(`星期${this.week[this.dateModel.week + 1 == 7 ? 0 : this.dateModel.week + 1]}`)
                 .fontSize(12)
                 .fontColor('#a1a1a1')
             }
+            .justifyContent(FlexAlign.Start)
+            .onClick(() => {
+              // 点击当前日期后打开自定义弹窗显示日历
+              this.dialogController.open()
+            })
           }
           .justifyContent(FlexAlign.SpaceBetween)
           .layoutWeight(1)
@@ -177,7 +274,7 @@ struct RoomDetailPage {
         left: 5,
         right: 5,
         top: 15,
-        bottom:15
+        bottom: 15
       })
       .width('100%')
 
@@ -190,26 +287,13 @@ struct RoomDetailPage {
           duration: 300
         })
 
+
       Row() {
-        Icon({
-          imageUrl: $r('app.media.mi'),
-          txt: "20㎡"
-        })
-        Icon({
-          imageUrl: $r('app.media.lou'),
-          txt: "2-5层"
-        })
-        Icon({
-          imageUrl: $r('app.media.wifi'),
-          txt: "免费wifi"
-        })
-        Icon({
-          imageUrl: $r('app.media.dow'),
-          txt: "有窗"
-        })
-        Icon({
-          imageUrl: $r('app.media.bed'),
-          txt: "1.2米床"
+        ForEach(this.IconList, (IconItem: IconItemModel) => {
+          Icon({
+            imageUrl: IconItem.imageUrl,
+            txt: IconItem.txt
+          })
         })
       }
       .width('100%')
@@ -218,7 +302,7 @@ struct RoomDetailPage {
         left: 10,
         right: 10,
         top: 15,
-        bottom:15
+        bottom: 15
       })
 
       Divider()
@@ -230,7 +314,7 @@ struct RoomDetailPage {
         })
 
       Column({
-        space:10
+        space: 10
       }) {
         TxtItem({
           txt1: '便利设施',
@@ -250,6 +334,7 @@ struct RoomDetailPage {
         top: 30
       })
 
+      Blank()
 
       Button("预定房间")
         .width('100%')
@@ -258,7 +343,8 @@ struct RoomDetailPage {
 
         })
         .margin({
-          top: 20
+          top: 20,
+          bottom: 30
         })
 
 

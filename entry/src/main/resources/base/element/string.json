@@ -11,6 +11,86 @@
     {
       "name": "EntryAbility_label",
       "value": "label"
+    },
+    {
+      "name": "departure",
+      "value": "北京"
+    },
+    {
+      "name": "destination",
+      "value": "上海"
+    },
+    {
+      "name": "check_ticket",
+      "value": "检查车票"
+    },
+    {
+      "name": "departure_date",
+      "value": "出发日期"
+    },
+    {
+      "name": "button_text",
+      "value": "仅做UI展示"
+    },
+    {
+      "name": "week_width",
+      "value": "14.3%"
+    },
+    {
+      "name": "calendar_height",
+      "value": "90%"
+    },
+    {
+      "name": "ohos_id_text_size_headline",
+      "value": "14"
+    },
+    {
+      "name": "ohos_id_text_size_body1",
+      "value": "14"
+    },
+    {
+      "name": "ohos_id_corner_radius_default_m",
+      "value": "5"
+    },
+    {
+      "name": "ohos_id_text_font_family_medium",
+      "value": "medium"
+    },
+    {
+      "name": "ohos_id_text_size_body2",
+      "value": "14"
+    },
+    {
+      "name": "ohos_id_text_size_body3",
+      "value": "12"
+    },
+    {
+      "name": "ohos_id_text_size_caption",
+      "value": "10"
+    },
+    {
+      "name": "ohos_id_corner_radius_default_l",
+      "value": "16"
+    },
+    {
+      "name": "ohos_id_corner_radius_subtab",
+      "value": "4"
+    },
+    {
+      "name": "ohos_id_card_margin_start",
+      "value": "12"
+    },
+    {
+      "name": "ohos_id_card_padding_start",
+      "value": "12"
+    },
+    {
+      "name": "ohos_id_elements_margin_vertical_m",
+      "value": "8"
+    },
+    {
+      "name": "ohos_id_elements_margin_vertical_l",
+      "value": "16"
     }
   ]
 }

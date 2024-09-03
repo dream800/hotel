@@ -30,13 +30,17 @@ export struct TxtItem {
         .fontSize(14)
         .fontColor('#a1a1a1')
 
-      Text(this.txt2)    .fontSize(12)
+      Text(this.txt2)
+        .layoutWeight(1)
+        .fontSize(12)
         .fontColor('#111')
         .margin({
           left: 15
         })
 
     }
+    .width('100%')
+    .justifyContent(FlexAlign.Start)
 
   }
 }
