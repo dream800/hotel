@@ -5,7 +5,10 @@ import dayjs from "dayjs";
 import { CustomCalendarPickerDialog } from '../../view/CustomCalendarPickerDialog';
 import { DateModel } from '../../component/DateModel';
 import { getRealTimeDate } from '../../component/GetDate';
+import { RoomAdd } from '../../component/RoomAdd';
 import { DataManager } from '../../component/DataManager';
+import { RoomModel } from '../../models/RoomModel';
+import { RoomCount } from '../../models/RoomModel';
 
 interface IconItemModel {
   imageUrl: ResourceStr,
@@ -16,7 +19,8 @@ interface IconItemModel {
 @Component
 struct RoomDetailPage {
   @State message: string = 'Hello World';
-  IconList: IconItemModel[] = [{
+  IconList: IconItemModel[] = [
+    {
     imageUrl: $r('app.media.mi'),
     txt: "20㎡"
   },
@@ -47,7 +51,12 @@ struct RoomDetailPage {
 
   @State nextWeek: string = '';
 
+  roomCount: RoomCount = new RoomCount();
+
+  roomDetailItem: Partial<RoomModel> = {};
+
   @StorageLink('selectedDate') dateModel: DateModel = new DateModel(0, 0, 0, 0); // 初始化dateModel数据
+
 
   // 获取当前日期
   aboutToAppear(): void {
@@ -63,6 +72,10 @@ struct RoomDetailPage {
     this.nextYear = dateModel.year;
 
     this.nextWeek = this.week[dateModel.week + 1 == 7 ? 0 : dateModel.week + 1];
+
+    const param = router.getParams() as RoomModel
+    this.roomDetailItem = param;
+    this.roomCount.id = param?.id || 0;
   }
 
   getNewNextWeek() {
@@ -132,7 +145,7 @@ struct RoomDetailPage {
           Stack({ alignContent: Alignment.BottomEnd }) {
             Column() {
               Row() {
-                Text('雅悦双床房')
+                Text(this.roomDetailItem ? this.roomDetailItem.roomName : '雅悦双床房')
                   .fontSize(16)
                   .fontWeight(600)
                 Text('不含早')
@@ -165,7 +178,11 @@ struct RoomDetailPage {
             .alignItems(HorizontalAlign.Start)
             .width('100%')
 
-            Text("￥348").fontColor('#f5f5840b')
+            Text() {
+              Span("￥")
+              Span(this.roomDetailItem ? this.roomDetailItem.price : '323')
+            }
+              .fontColor('#f5f5840b')
           }
           .padding({
             top: 15,
@@ -251,20 +268,9 @@ struct RoomDetailPage {
           Text('房间数量')
             .fontSize(14)
             .fontColor(Color.Gray)
-
-          Row({
-            space: 10
-          }) {
-            Image($r('app.media.jian'))
-              .width(20)
-              .aspectRatio(1)
-              .fillColor(Color.Gray)
-            Text('1')
-            Image($r('app.media.jia'))
-              .width(25)
-              .aspectRatio(1)
-              .fillColor('#f5f5840b')
-          }
+          RoomAdd({
+            roomCount: this.roomCount
+          })
 
         }
         .width('100%')

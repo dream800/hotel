@@ -4,5 +4,12 @@ export interface RoomModel {
   imageUrl: string | null;
   price: string | null;
   labelList: string[] | null;
+  selectCount: number;
+}
+
+export class  RoomCount {
+  id: number = 1;
+
+  selectCount : number = 0;
 }
 

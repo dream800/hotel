@@ -83,7 +83,7 @@ export struct RoomListItem {
         url: "pages/hotelList/RoomDetailPage",
         params: {
           id: this.RoomItem.id,
-          name: this.RoomItem.roomName,
+          roomName: this.RoomItem.roomName,
           price: this.RoomItem.price,
         }
       })
