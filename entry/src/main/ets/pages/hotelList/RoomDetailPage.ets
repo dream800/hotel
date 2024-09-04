@@ -9,6 +9,7 @@ import { RoomAdd } from '../../component/RoomAdd';
 import { DataManager } from '../../component/DataManager';
 import { RoomModel } from '../../models/RoomModel';
 import { RoomCount } from '../../models/RoomModel';
+import { SwiperComponent } from '../../component/SwiperComponent';
 
 interface IconItemModel {
   imageUrl: ResourceStr,
@@ -138,8 +139,11 @@ struct RoomDetailPage {
       Row() {
         Column() {
           Row() {
-            Image($r('app.media.room_detail_01'))
-              .width('100%')
+
+            SwiperComponent()
+
+            // Image($r('app.media.room_detail_01'))
+            //   .width('100%')
           }
 
           Stack({ alignContent: Alignment.BottomEnd }) {

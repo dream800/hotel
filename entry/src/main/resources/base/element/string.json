@@ -91,6 +91,54 @@
     {
       "name": "ohos_id_elements_margin_vertical_l",
       "value": "16"
+    },
+    {
+      "name": "main_page_top_borderRadius",
+      "value": "8"
+    },
+    {
+      "name": "main_page_list_borderRadius",
+      "value": "6"
+    },
+    {
+      "name": "main_page_padding1",
+      "value": "10"
+    },
+    {
+      "name": "main_page_padding2",
+      "value": "12"
+    },
+    {
+      "name": "main_page_padding3",
+      "value": "16"
+    },
+    {
+      "name": "main_page_padding4",
+      "value": "18"
+    },
+    {
+      "name": "main_page_padding5",
+      "value": "8"
+    },
+    {
+      "name": "bottom_title_height",
+      "value": "36"
+    },
+    {
+      "name": "swiper_stack_height1",
+      "value": "130"
+    },
+    {
+      "name": "swiper_stack_height2",
+      "value": "180"
+    },
+    {
+      "name": "swiper_stack_width",
+      "value": "310"
+    },
+    {
+      "name": "main_page_swiper_height",
+      "value": "200"
     }
   ]
 }

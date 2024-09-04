@@ -88,6 +88,10 @@ export struct HotelListItem {
       .justifyContent(FlexAlign.SpaceBetween)
       .alignItems(HorizontalAlign.Start)
       .backgroundColor(Color.White)
+      .layoutWeight(1)
+      .margin({
+        left: 10
+      })
 
       Column() {
         Row() {
